@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5BDEDB9F-7642-4DEB-A20B-399B27C8ECC6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>chirpstackdocker</RootNamespace>
+    <AssemblyName>chirpstackdocker</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="azure.yml" />
+    <None Include="configuration\chirpstack-gateway-bridge\chirpstack-gateway-bridge.toml" />
+    <None Include="configuration\chirpstack\chirpstack.toml" />
+    <None Include="configuration\chirpstack\region_as923.toml" />
+    <None Include="configuration\chirpstack\region_as923_2.toml" />
+    <None Include="configuration\chirpstack\region_as923_3.toml" />
+    <None Include="configuration\chirpstack\region_as923_4.toml" />
+    <None Include="configuration\chirpstack\region_au915_0.toml" />
+    <None Include="configuration\chirpstack\region_au915_1.toml" />
+    <None Include="configuration\chirpstack\region_au915_2.toml" />
+    <None Include="configuration\chirpstack\region_au915_3.toml" />
+    <None Include="configuration\chirpstack\region_au915_4.toml" />
+    <None Include="configuration\chirpstack\region_au915_5.toml" />
+    <None Include="configuration\chirpstack\region_au915_6.toml" />
+    <None Include="configuration\chirpstack\region_au915_7.toml" />
+    <None Include="configuration\chirpstack\region_cn470_0.toml" />
+    <None Include="configuration\chirpstack\region_cn470_1.toml" />
+    <None Include="configuration\chirpstack\region_cn470_10.toml" />
+    <None Include="configuration\chirpstack\region_cn470_11.toml" />
+    <None Include="configuration\chirpstack\region_cn470_2.toml" />
+    <None Include="configuration\chirpstack\region_cn470_3.toml" />
+    <None Include="configuration\chirpstack\region_cn470_4.toml" />
+    <None Include="configuration\chirpstack\region_cn470_5.toml" />
+    <None Include="configuration\chirpstack\region_cn470_6.toml" />
+    <None Include="configuration\chirpstack\region_cn470_7.toml" />
+    <None Include="configuration\chirpstack\region_cn470_8.toml" />
+    <None Include="configuration\chirpstack\region_cn470_9.toml" />
+    <None Include="configuration\chirpstack\region_cn779.toml" />
+    <None Include="configuration\chirpstack\region_eu433.toml" />
+    <None Include="configuration\chirpstack\region_eu868.toml" />
+    <None Include="configuration\chirpstack\region_in865.toml" />
+    <None Include="configuration\chirpstack\region_ism2400.toml" />
+    <None Include="configuration\chirpstack\region_kr920.toml" />
+    <None Include="configuration\chirpstack\region_ru864.toml" />
+    <None Include="configuration\chirpstack\region_us915_0.toml" />
+    <None Include="configuration\chirpstack\region_us915_1.toml" />
+    <None Include="configuration\chirpstack\region_us915_2.toml" />
+    <None Include="configuration\chirpstack\region_us915_3.toml" />
+    <None Include="configuration\chirpstack\region_us915_4.toml" />
+    <None Include="configuration\chirpstack\region_us915_5.toml" />
+    <None Include="configuration\chirpstack\region_us915_6.toml" />
+    <None Include="configuration\chirpstack\region_us915_7.toml" />
+    <None Include="configuration\mosquitto\mosquitto.conf" />
+    <None Include="configuration\postgresql\initdb\001-init-chirpstack.sh" />
+    <None Include="configuration\postgresql\initdb\002-chirpstack_extensions.sh" />
+    <None Include="docker-compose.yml" />
+    <None Include="LICENSE" />
+    <None Include="Makefile" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lorawan-devices\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

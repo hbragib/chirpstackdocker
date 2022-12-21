@@ -1,0 +1,110 @@
+apiVersion: 2019-12-01
+location: eastus
+name: chirpstackcg
+
+properties:
+  containers:
+  - name: chirpstack
+    properties:
+      image: chirpstack/chirpstack:4.1.1
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      command: -c /etc/chirpstack
+      restart: unless-stopped
+      volumes:
+        - configdata/configuration/chirpstack:/etc/chirpstack
+        - configdata/lorawan-devices:/opt/lorawan-devices
+      depends_on:
+        - postgres
+        - mosquitto
+        - redis
+      environment:
+        - MQTT_BROKER_HOST=mosquitto
+        - REDIS_HOST=redis
+        - POSTGRESQL_HOST=postgres
+      ports:
+        - 8080:8080
+  - name: chirpstack-gateway-bridge-eu868
+    properties:
+      image: chirpstack/chirpstack-gateway-bridge:4.0.3
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+        restart: unless-stopped
+        ports:
+          - 1700:1700/udp
+        volumes:
+          - configdata/configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+        depends_on: 
+          - mosquitto
+  - name: chirpstack-rest-api
+    properties:
+      image: chirpstack/chirpstack-rest-api:4.1.1
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      restart: unless-stopped
+      command: --server chirpstack:8080 --bind 0.0.0.0:8090 --insecure
+      ports:
+        - 8090:8090
+      depends_on:
+        - chirpstack
+
+  - name: postgres
+    properties:
+      image: postgres:14-alpine
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      restart: unless-stopped
+      volumes:
+        - configdata/configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+        - postgresqldata:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_PASSWORD=root
+
+  - name: redis
+    properties:
+      image: redis:7-alpine
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      restart: unless-stopped
+      volumes:
+        - redisdata:/data
+
+  - name: mosquitto
+    properties:
+      image: eclipse-mosquitto:2
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      restart: unless-stopped
+      ports:
+        - 1883:1883
+      volumes: 
+        - configdata/configuration/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 80
+    - protocol: tcp
+      port: 8080
+    - protocol: udp
+      port: 1700
+    - protocol: tcp
+      port: 1883
+    - protocol: tcp
+      port: 8090
+tags: {exampleTag: chirpstack}
+type: Microsoft.ContainerInstance/containerGroups
