@@ -6,8 +6,8 @@ services:
     command: -c /etc/chirpstack
     restart: unless-stopped
     volumes:
-      - configdata/configuration/chirpstack:/etc/chirpstack
-      - configdata/lorawan-devices:/opt/lorawan-devices
+      - ./configuration/chirpstack:/etc/chirpstack
+      - ./lorawan-devices:/opt/lorawan-devices
     depends_on:
       - postgres
       - mosquitto
@@ -25,7 +25,7 @@ services:
     ports:
       - 1700:1700/udp
     volumes:
-      - configdata/configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     depends_on: 
       - mosquitto
 
@@ -42,7 +42,7 @@ services:
     image: postgres:14-alpine
     restart: unless-stopped
     volumes:
-      - configdata/configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
       - postgresqldata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=root
@@ -59,21 +59,10 @@ services:
     ports:
       - 1883:1883
     volumes: 
-      - configdata/configuration/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./configuration/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
 volumes:
   postgresqldata:
-    driver: azure_file
-    driver_opts:
-      share_name: myfileshare
-      storage_account_name: trackitlorastorage
   redisdata:
-    driver: azure_file
-    driver_opts:
-      share_name: myfileshare
-      storage_account_name: trackitlorastorage
   configdata:
-    driver: azure_file
-    driver_opts:
-      share_name: myfileshare
-      storage_account_name: trackitlorastorage
+  
